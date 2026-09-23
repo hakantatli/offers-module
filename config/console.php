@@ -26,6 +26,13 @@ $config = [
         ],
         'db' => $db,
     ],
+    'controllerMap' => [
+        'seed' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => '@app/migrations/seeds',
+            'migrationTable' => '{{%migration_seed}}',
+        ],
+    ],
     'params' => $params,
 ];
 
