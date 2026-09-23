@@ -19,6 +19,11 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'user' => [
+            'identityClass' => 'app\models\User',
+            'enableAutoLogin' => true,
+            'loginUrl' => ['site/login'],
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -41,6 +46,10 @@ $config = [
                 'offer/<slug:[\w-]+>' => 'offer/view',
                 'admin' => 'offer-admin/index',
                 'admin/casinos' => 'casino/index',
+                'admin/casinos/create' => 'casino/create',
+                'admin/casinos/<id:\d+>' => 'casino/view',
+                'admin/casinos/<id:\d+>/update' => 'casino/update',
+                'admin/casinos/<id:\d+>/delete' => 'casino/delete',
                 'admin/offers' => 'offer-admin/index',
                 'login' => 'site/login',
                 'logout' => 'site/logout',
