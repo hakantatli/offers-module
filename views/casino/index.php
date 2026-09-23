@@ -52,7 +52,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'rating',
                             'format' => 'raw',
-                            'headerOptions' => ['style' => 'width: 130px;'],
+                            'filterInputOptions' => [
+                                'class' => 'form-control',
+                                'placeholder' => 'e.g. >4.5',
+                            ],
+                            'headerOptions' => ['style' => 'width: 140px;'],
                             'value' => function (Casino $model) {
                                 return '<span class="rating-stars text-warning">★</span> ' . number_format($model->rating, 2);
                             },
@@ -61,6 +65,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'is_active',
                             'format' => 'raw',
                             'filter' => [1 => 'Active', 0 => 'Inactive'],
+                            'filterInputOptions' => [
+                                'class' => 'form-select',
+                                'prompt' => 'All',
+                            ],
                             'headerOptions' => ['style' => 'width: 140px;'],
                             'value' => function (Casino $model) {
                                 if ($model->is_active) {

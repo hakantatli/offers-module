@@ -17,8 +17,7 @@ class CasinoSearch extends Casino
     {
         return [
             [['id', 'is_active'], 'integer'],
-            [['name', 'slug'], 'safe'],
-            [['rating'], 'number'],
+            [['name', 'slug', 'rating'], 'safe'],
         ];
     }
 
@@ -59,8 +58,17 @@ class CasinoSearch extends Casino
         $query->andFilterWhere([
             'id' => $this->id,
             'is_active' => $this->is_active,
-            'rating' => $this->rating,
         ]);
+
+        // Support operator filters for rating (e.g. >2, >=4.5, <3, <=4, 4.8)
+        if (!empty($this->rating)) {
+            $trimmed = trim($this->rating);
+            if (preg_match('/^(>=|<=|>|<|=)?\s*([0-9]+(?:\.[0-9]+)?)$/', $trimmed, $matches)) {
+                $operator = $matches[1] ?: '=';
+                $value = (float)$matches[2];
+                $query->andWhere([$operator, 'rating', $value]);
+            }
+        }
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'slug', $this->slug]);
