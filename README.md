@@ -26,6 +26,22 @@ docker compose exec app php yii seed --interactive=0
 
 ---
 
+## 🧪 Running the Test Suite (60 Tests, 284 Assertions)
+
+The project includes complete test coverage across all models, behaviors, search filters, N+1 query prevention, and **every single public, auth, and admin endpoint**:
+
+### Run All Tests
+```bash
+docker compose exec app vendor/bin/phpunit
+```
+
+### Run With Detailed Output
+```bash
+docker compose exec app vendor/bin/phpunit --testdox
+```
+
+---
+
 ## 🔐 Admin Authentication & Credentials
 
 Admin sections are strictly guarded behind authentication (`yii\filters\AccessControl`). Unauthenticated visits are automatically redirected to `/login`.

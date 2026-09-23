@@ -92,4 +92,15 @@ class Casino extends ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+
+    /**
+     * Gets query for [[Offers]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOffers()
+    {
+        return $this->hasMany(Offer::class, ['casino_id' => 'id']);
+    }
 }
+

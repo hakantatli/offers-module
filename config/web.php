@@ -49,6 +49,7 @@ $config = [
                 'admin/casinos/create' => 'casino/create',
                 'admin/casinos/<id:\d+>' => 'casino/view',
                 'admin/casinos/<id:\d+>/update' => 'casino/update',
+                'admin/casinos/<id:\d+>/delete' => 'casino/delete',
                 'admin/offers' => 'offer-admin/index',
                 'admin/offers/create' => 'offer-admin/create',
                 'admin/offers/<id:\d+>' => 'offer-admin/view',
