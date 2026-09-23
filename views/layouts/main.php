@@ -32,13 +32,13 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark shadow-sm sticky-top']
     ]);
 
-    $menuItems = [
-        ['label' => 'Casinos', 'url' => ['/casino/index']],
-    ];
+    $menuItems = [];
 
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Admin Login', 'url' => ['/site/login']];
     } else {
+        $menuItems[] = ['label' => '🎰 Casinos', 'url' => ['/casino/index']];
+        $menuItems[] = ['label' => '🎁 Offers', 'url' => ['/offer-admin/index']];
         $menuItems[] = '<li class="nav-item">'
             . Html::beginForm(['/site/logout'], 'post', ['class' => 'd-inline'])
             . Html::submitButton(
