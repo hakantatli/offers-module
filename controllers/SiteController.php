@@ -59,7 +59,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->redirect(['casino/index']);
+        return $this->redirect(['offer/index']);
     }
 
     /**

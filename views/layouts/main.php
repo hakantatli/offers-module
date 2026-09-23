@@ -28,17 +28,19 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
     <?php
     NavBar::begin([
         'brandLabel' => '🎰 ' . Yii::$app->name,
-        'brandUrl' => ['/casino/index'],
+        'brandUrl' => ['/offer/index'],
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark shadow-sm sticky-top']
     ]);
 
-    $menuItems = [];
+    $menuItems = [
+        ['label' => 'Offers', 'url' => ['/offer/index']],
+    ];
 
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Admin Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = ['label' => '🎰 Casinos', 'url' => ['/casino/index']];
-        $menuItems[] = ['label' => '🎁 Offers', 'url' => ['/offer-admin/index']];
+        $menuItems[] = ['label' => '🎁 Manage Offers', 'url' => ['/offer-admin/index']];
         $menuItems[] = '<li class="nav-item">'
             . Html::beginForm(['/site/logout'], 'post', ['class' => 'd-inline'])
             . Html::submitButton(
