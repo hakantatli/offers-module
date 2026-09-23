@@ -1,0 +1,36 @@
+{
+    "name": "revpanda/offers-crud",
+    "description": "Yii2 Offers Application with PHP 8.3 and Bootstrap 5",
+    "type": "project",
+    "license": "proprietary",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.3.0",
+        "yiisoft/yii2": "~2.0.49",
+        "yiisoft/yii2-bootstrap5": "~2.0.2"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "~2.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": ""
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        },
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
+    }
+}

@@ -1,0 +1,47 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: revpanda_app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: revpanda
+      DB_USER: revpanda
+      DB_PASSWORD: revpanda_pass
+      YII_ENV: dev
+      YII_DEBUG: "true"
+    volumes:
+      - .:/var/www/html
+      - app_vendor:/var/www/html/vendor
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    container_name: revpanda_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: revpanda
+      MYSQL_USER: revpanda
+      MYSQL_PASSWORD: revpanda_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -proot_pass"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  db_data:
+  app_vendor:
