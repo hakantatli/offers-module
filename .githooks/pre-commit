@@ -1,0 +1,30 @@
+#!/bin/sh
+# Git pre-commit hook: Run PHPStan static analysis before committing
+
+echo "🔍 [pre-commit] Running PHPStan static analysis..."
+
+# Check if running inside container or host
+if [ -f "/.dockerenv" ] || [ -f "/run/.containerenv" ]; then
+    composer stan
+    STATUS=$?
+else
+    # Host machine: check if Docker compose app container is running
+    if docker compose ps --services --filter "status=running" 2>/dev/null | grep -q "^app$"; then
+        docker compose exec -T app composer stan
+        STATUS=$?
+    else
+        echo "⚠️  [pre-commit] 'app' container is not running. Starting temporary container for analysis..."
+        docker compose run --rm -T app composer stan
+        STATUS=$?
+    fi
+fi
+
+if [ $STATUS -ne 0 ]; then
+    echo ""
+    echo "❌ [pre-commit] PHPStan check failed! Please fix static analysis errors before committing."
+    echo "   (Emergency bypass: git commit --no-verify)"
+    exit 1
+fi
+
+echo "✅ [pre-commit] PHPStan passed cleanly. Proceeding with commit."
+exit 0

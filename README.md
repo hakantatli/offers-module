@@ -40,11 +40,21 @@ docker compose exec app vendor/bin/phpunit --testdox
 ```
 
 ### 2. Static Analysis: PHPStan (Level 6)
-Static analysis configured at Level 6
+Static analysis configured at Level 6:
 
 ```bash
 docker compose exec app composer stan
 ```
+
+### 3. Git Pre-Commit Hook
+Automatic PHPStan check before every commit:
+
+```bash
+# Enable the committed hooks (one-time setup)
+composer setup-hooks
+```
+> If any PHPStan errors exist, commits are automatically blocked until fixed.
+> Emergency bypass: `git commit --no-verify`
 
 ---
 
