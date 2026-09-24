@@ -84,7 +84,7 @@ class OfferSearch extends Offer
 
         // Support operator filters for amount (e.g. >=100, >50, <=500, 250)
         if (!empty($this->amount)) {
-            $trimmed = trim($this->amount);
+            $trimmed = trim((string)$this->amount);
             if (preg_match('/^(>=|<=|>|<|=)?\s*([0-9]+(?:\.[0-9]+)?)$/', $trimmed, $matches)) {
                 $operator = $matches[1] ?: '=';
                 $value = (float)$matches[2];

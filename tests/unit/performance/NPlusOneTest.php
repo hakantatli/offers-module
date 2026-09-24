@@ -33,7 +33,7 @@ class NPlusOneTest extends TestCase
 
         $initialQueryCount = count(array_filter(
             Yii::getLogger()->messages,
-            fn($m) => ($m[2] ?? '') === 'yii\\db\\Command::query'
+            fn($m) => $m[2] === 'yii\\db\\Command::query'
         ));
 
         // Now simulate the view loop accessing casino properties for all 20 cards
@@ -47,7 +47,7 @@ class NPlusOneTest extends TestCase
 
         $finalQueryCount = count(array_filter(
             Yii::getLogger()->messages,
-            fn($m) => ($m[2] ?? '') === 'yii\\db\\Command::query'
+            fn($m) => $m[2] === 'yii\\db\\Command::query'
         ));
 
         // Assert that accessing $offer->casino in a loop produced ZERO additional queries!

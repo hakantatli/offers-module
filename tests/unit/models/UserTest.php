@@ -11,6 +11,7 @@ class UserTest extends TestCase
     {
         $user = User::findIdentity('100');
         $this->assertNotNull($user);
+        $this->assertInstanceOf(User::class, $user);
         $this->assertEquals('admin', $user->username);
         $this->assertEquals('100', $user->getId());
 

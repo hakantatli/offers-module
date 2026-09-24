@@ -62,7 +62,7 @@ class CasinoSearch extends Casino
 
         // Support operator filters for rating (e.g. >2, >=4.5, <3, <=4, 4.8)
         if (!empty($this->rating)) {
-            $trimmed = trim($this->rating);
+            $trimmed = trim((string)$this->rating);
             if (preg_match('/^(>=|<=|>|<|=)?\s*([0-9]+(?:\.[0-9]+)?)$/', $trimmed, $matches)) {
                 $operator = $matches[1] ?: '=';
                 $value = (float)$matches[2];

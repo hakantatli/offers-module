@@ -35,7 +35,9 @@ class LoginFormTest extends TestCase
         ]);
         $this->assertTrue($model->login());
         $this->assertFalse(Yii::$app->user->isGuest);
-        $this->assertEquals('admin', Yii::$app->user->identity->username);
+        $identity = Yii::$app->user->identity;
+        $this->assertInstanceOf(\app\models\User::class, $identity);
+        $this->assertEquals('admin', $identity->username);
 
         // Logout after test
         Yii::$app->user->logout();

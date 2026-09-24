@@ -32,7 +32,7 @@ class User extends BaseObject implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return isset(self::$users[$id]) ? new self(self::$users[$id]) : null;
     }
 
     /**
@@ -42,7 +42,7 @@ class User extends BaseObject implements IdentityInterface
     {
         foreach (self::$users as $user) {
             if ($user['accessToken'] === $token) {
-                return new static($user);
+                return new self($user);
             }
         }
         return null;
@@ -52,13 +52,13 @@ class User extends BaseObject implements IdentityInterface
      * Finds user by username.
      *
      * @param string $username
-     * @return static|null
+     * @return self|null
      */
     public static function findByUsername($username)
     {
         foreach (self::$users as $user) {
             if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
+                return new self($user);
             }
         }
         return null;

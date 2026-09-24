@@ -12,7 +12,8 @@
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
-        "phpunit/phpunit": "^10.5"
+        "phpunit/phpunit": "^10.5",
+        "phpstan/phpstan": "^2.2"
     },
     "autoload": {
         "psr-4": {
@@ -33,5 +34,9 @@
         "fxp-asset": {
             "enabled": false
         }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "stan": "phpstan analyse"
     }
 }

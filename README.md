@@ -26,18 +26,27 @@ docker compose exec app php yii seed --interactive=0
 
 ---
 
-## 🧪 Running the Test Suite (60 Tests, 284 Assertions)
+## 🧪 Testing & Code Quality
 
-The project includes complete test coverage across all models, behaviors, search filters, N+1 query prevention, and **every single public, auth, and admin endpoint**:
+### 1. Automated Test Suite
+Complete test coverage across all models, behaviors, search filters, N+1 query prevention, and **every single public, auth, and admin endpoint**:
 
-### Run All Tests
 ```bash
-docker compose exec app vendor/bin/phpunit
+# Run all tests
+docker compose exec app composer test
+
+# Run with human-readable specification output
+docker compose exec app vendor/bin/phpunit --testdox
+
+
 ```
 
-### Run With Detailed Output
+### 2. Static Analysis: PHPStan (Level 5)
+Static analysis configured at Level 5 with zero errors across controllers, models, config, and tests:
+
 ```bash
-docker compose exec app vendor/bin/phpunit --testdox
+docker compose exec app composer stan
+# or: docker compose exec app vendor/bin/phpstan analyse
 ```
 
 ---

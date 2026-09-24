@@ -1,0 +1,16 @@
+parameters:
+    level: 5
+    paths:
+        - controllers
+        - models
+        - config
+        - tests
+    bootstrapFiles:
+        - vendor/yiisoft/yii2/Yii.php
+    ignoreErrors:
+        -
+            message: '#Ternary operator condition is always true#'
+            path: config/web.php
+        -
+            message: '#If condition is always false#'
+            path: config/web.php
