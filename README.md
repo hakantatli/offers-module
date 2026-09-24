@@ -29,8 +29,6 @@ docker compose exec app php yii seed --interactive=0
 ## 🧪 Testing & Code Quality
 
 ### 1. Automated Test Suite
-Complete test coverage across all models, behaviors, search filters, N+1 query prevention, and **every single public, auth, and admin endpoint**:
-
 ```bash
 # Run all tests
 docker compose exec app composer test
@@ -53,14 +51,10 @@ Automatic PHPStan check before every commit:
 # Enable the committed hooks (one-time setup)
 composer setup-hooks
 ```
-> If any PHPStan errors exist, commits are automatically blocked until fixed.
-> Emergency bypass: `git commit --no-verify`
 
 ---
 
 ## 🔐 Admin Authentication & Credentials
-
-Admin sections are strictly guarded behind authentication (`yii\filters\AccessControl`). Unauthenticated visits are automatically redirected to `/login`.
 
 - **Login URL:** [http://localhost:8080/login](http://localhost:8080/login)
 - **Username:** `admin`
