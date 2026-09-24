@@ -19,6 +19,7 @@ use yii\helpers\Inflector;
  * @property int $is_active
  * @property string $created_at
  * @property string|null $updated_at
+ * @property Offer[] $offers
  */
 class Casino extends ActiveRecord
 {

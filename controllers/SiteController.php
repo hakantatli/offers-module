@@ -3,7 +3,10 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Casino;
 use app\models\LoginForm;
+use app\models\Offer;
+use yii\db\Expression;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -94,5 +97,40 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    /**
+     * Generates dynamic sitemap.xml listing active casinos and active non-expired offers with lastmod.
+     * Draft and expired offers are excluded.
+     *
+     * @return Response
+     */
+    public function actionSitemap(): Response
+    {
+        /** @var Casino[] $casinos */
+        $casinos = Casino::find()
+            ->where(['is_active' => 1])
+            ->with([
+                'offers' => function ($query) {
+                    $query->where(['status' => Offer::STATUS_ACTIVE])
+                        ->andWhere([
+                            'or',
+                            ['expires_at' => null],
+                            ['>', 'expires_at', new Expression('NOW()')],
+                        ])
+                        ->orderBy(['updated_at' => SORT_DESC, 'id' => SORT_DESC]);
+                },
+            ])
+            ->orderBy(['rating' => SORT_DESC, 'name' => SORT_ASC])
+            ->all();
+
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_RAW;
+        $response->headers->set('Content-Type', 'application/xml; charset=UTF-8');
+        $response->content = $this->renderPartial('sitemap', [
+            'casinos' => $casinos,
+        ]);
+
+        return $response;
     }
 }

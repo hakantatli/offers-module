@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $model->title;
                     <ul class="list-group list-group-flush mb-3">
                         <li class="list-group-item px-0 d-flex justify-content-between">
                             <span class="text-muted">Promotions:</span>
-                            <?= Html::a('View all ' . Html::encode($model->casino->name) . ' offers', ['offer/index', 'casino_id' => $model->casino->id], ['class' => 'text-decoration-none']) ?>
+                            <?= Html::a('View all ' . Html::encode($model->casino->name) . ' offers', ['offer/casino', 'slug' => $model->casino->slug], ['class' => 'text-decoration-none']) ?>
                         </li>
                     </ul>
                 </div>

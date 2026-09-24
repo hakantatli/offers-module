@@ -23,7 +23,7 @@ class OfferController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $selectedType = Yii::$app->request->get('type');
         $selectedCasino = Yii::$app->request->get('casino_id');
@@ -86,13 +86,37 @@ class OfferController extends Controller
     }
 
     /**
+     * Public offers directory filtered by casino slug.
+     *
+     * @param string $slug
+     * @return string
+     * @throws NotFoundHttpException if the casino is not found or inactive
+     */
+    public function actionCasino(string $slug): string
+    {
+        $casino = Casino::find()->where(['slug' => $slug, 'is_active' => 1])->one();
+        if ($casino === null) {
+            throw new NotFoundHttpException('The requested casino does not exist or is inactive.');
+        }
+
+        Yii::$app->request->setQueryParams(array_merge(
+            Yii::$app->request->getQueryParams(),
+            ['casino_id' => (string)$casino->id]
+        ));
+
+        $this->view->title = $casino->name . ' - Casino Offers';
+
+        return $this->actionIndex();
+    }
+
+    /**
      * Displays a single offer detail page by slug.
      *
      * @param string $slug
      * @return string
      * @throws NotFoundHttpException if the offer is not found, inactive, or expired
      */
-    public function actionView($slug)
+    public function actionView(string $slug): string
     {
         $model = Offer::find()
             ->joinWith(['casino'])

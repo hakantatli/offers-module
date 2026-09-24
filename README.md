@@ -26,9 +26,21 @@ docker compose exec app php yii seed --interactive=0
 
 ---
 
-## 🧪 Testing & Code Quality
+## 🔐 Admin Authentication & Credentials
 
-### 1. Automated Test Suite
+- **Login URL:** [http://localhost:8080/login](http://localhost:8080/login)
+- **Username:** `admin`
+- **Password:** `admin123`
+
+---
+
+## 🌐 Sitemap
+
+- **Dynamic XML Sitemap:** [http://localhost:8080/sitemap.xml](http://localhost:8080/sitemap.xml)
+
+---
+
+## 🧪 Testing & Code Quality
 ```bash
 # Run all tests
 docker compose exec app composer test
@@ -51,13 +63,3 @@ Automatic PHPStan check before every commit:
 # Enable the committed hooks (one-time setup)
 composer setup-hooks
 ```
-
----
-
-## 🔐 Admin Authentication & Credentials
-
-- **Login URL:** [http://localhost:8080/login](http://localhost:8080/login)
-- **Username:** `admin`
-- **Password:** `admin123`
-
----
