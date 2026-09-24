@@ -14,7 +14,7 @@ class AuthEndpointTest extends TestCase
         $this->client = new TestHttpClient();
     }
 
-    public function testLoginViewDisplaysForm()
+    public function testLoginViewDisplaysForm(): void
     {
         $response = $this->client->get('/login');
         $this->assertEquals(200, $response['statusCode']);
@@ -23,7 +23,7 @@ class AuthEndpointTest extends TestCase
         $this->assertStringContainsString('name="LoginForm[password]"', $response['body']);
     }
 
-    public function testLoginFailureWithWrongPassword()
+    public function testLoginFailureWithWrongPassword(): void
     {
         // First GET /login to retrieve CSRF token
         $this->client->get('/login');
@@ -38,7 +38,7 @@ class AuthEndpointTest extends TestCase
         $this->assertStringContainsString('Incorrect username or password.', $response['body']);
     }
 
-    public function testLoginSuccessAndLogout()
+    public function testLoginSuccessAndLogout(): void
     {
         // 1. GET /login to extract CSRF token
         $this->client->get('/login');

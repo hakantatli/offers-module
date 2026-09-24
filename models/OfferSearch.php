@@ -38,10 +38,10 @@ class OfferSearch extends Offer
      * Creates data provider instance with search query applied.
      * Uses eager loading with joinWith to prevent N+1 queries.
      *
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params = []): ActiveDataProvider
     {
         $query = Offer::find()->joinWith(['casino']);
 

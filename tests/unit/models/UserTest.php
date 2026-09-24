@@ -7,7 +7,7 @@ use app\models\User;
 
 class UserTest extends TestCase
 {
-    public function testFindUserById()
+    public function testFindUserById(): void
     {
         $user = User::findIdentity('100');
         $this->assertNotNull($user);
@@ -18,7 +18,7 @@ class UserTest extends TestCase
         $this->assertNull(User::findIdentity('99999'));
     }
 
-    public function testFindUserByUsername()
+    public function testFindUserByUsername(): void
     {
         $user = User::findByUsername('admin');
         $this->assertNotNull($user);
@@ -31,7 +31,7 @@ class UserTest extends TestCase
         $this->assertNull(User::findByUsername('nonexistent_user'));
     }
 
-    public function testValidatePassword()
+    public function testValidatePassword(): void
     {
         $user = User::findByUsername('admin');
         $this->assertNotNull($user);
@@ -39,7 +39,7 @@ class UserTest extends TestCase
         $this->assertFalse($user->validatePassword('wrong_password'));
     }
 
-    public function testValidateAuthKey()
+    public function testValidateAuthKey(): void
     {
         $user = User::findByUsername('admin');
         $this->assertNotNull($user);

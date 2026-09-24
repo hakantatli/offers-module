@@ -9,7 +9,7 @@ use Yii;
 
 class NPlusOneTest extends TestCase
 {
-    public function testZeroNPlusOneQueriesOnOffersDirectory()
+    public function testZeroNPlusOneQueriesOnOffersDirectory(): void
     {
         Yii::$app->db->enableProfiling = true;
         Yii::getLogger()->messages = []; // Clear log messages

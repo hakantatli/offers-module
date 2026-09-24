@@ -37,6 +37,9 @@ class TestHttpClient
 
     /**
      * Executes GET request.
+     *
+     * @param array<string|int, string> $headers
+     * @return array{statusCode: int, body: string, headers: array<string, string>, redirectUrl: string|null|false}
      */
     public function get(string $path, array $headers = [], bool $followRedirects = false): array
     {
@@ -45,6 +48,10 @@ class TestHttpClient
 
     /**
      * Executes POST request.
+     *
+     * @param array<string, mixed> $data
+     * @param array<string|int, string> $headers
+     * @return array{statusCode: int, body: string, headers: array<string, string>, redirectUrl: string|null|false}
      */
     public function post(string $path, array $data = [], array $headers = [], bool $followRedirects = false): array
     {
@@ -58,6 +65,10 @@ class TestHttpClient
 
     /**
      * Internal cURL executor.
+     *
+     * @param array<string, mixed> $data
+     * @param array<string|int, string> $headers
+     * @return array{statusCode: int, body: string, headers: array<string, string>, redirectUrl: string|null|false}
      */
     private function request(
         string $method,
@@ -110,6 +121,9 @@ class TestHttpClient
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function parseHeaders(string $headerText): array
     {
         $headers = [];

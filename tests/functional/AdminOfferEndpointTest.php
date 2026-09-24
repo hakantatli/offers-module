@@ -10,7 +10,7 @@ class AdminOfferEndpointTest extends TestCase
 {
     private TestHttpClient $guestClient;
     private TestHttpClient $adminClient;
-    private Casino $casino;
+    private ?Casino $casino = null;
 
     protected function setUp(): void
     {
@@ -34,7 +34,7 @@ class AdminOfferEndpointTest extends TestCase
         parent::tearDown();
     }
 
-    public function testOffersIndexGuestRedirects()
+    public function testOffersIndexGuestRedirects(): void
     {
         $resOffers = $this->guestClient->get('/admin/offers');
         $this->assertEquals(302, $resOffers['statusCode']);
@@ -46,7 +46,7 @@ class AdminOfferEndpointTest extends TestCase
         $this->assertStringContainsString('login', $resAdmin['headers']['location'] ?? '');
     }
 
-    public function testOffersIndexAdminAccess()
+    public function testOffersIndexAdminAccess(): void
     {
         $response = $this->adminClient->get('/admin/offers');
         $this->assertEquals(200, $response['statusCode']);
@@ -54,7 +54,7 @@ class AdminOfferEndpointTest extends TestCase
         $this->assertStringContainsString('+ New Offer', $response['body']);
     }
 
-    public function testOfferCreateForm()
+    public function testOfferCreateForm(): void
     {
         // Guest blocked
         $guestRes = $this->guestClient->get('/admin/offers/create');
@@ -67,14 +67,14 @@ class AdminOfferEndpointTest extends TestCase
         $this->assertStringContainsString('name="Offer[title]"', $adminRes['body']);
     }
 
-    public function testOfferCreateValidationFailurePastExpiry()
+    public function testOfferCreateValidationFailurePastExpiry(): void
     {
         $this->adminClient->get('/admin/offers/create');
 
         $pastDate = date('Y-m-d\TH:i', strtotime('-2 days'));
 
         $response = $this->adminClient->post('/admin/offers/create', [
-            'Offer[casino_id]' => $this->casino->id,
+            'Offer[casino_id]' => $this->casino?->id,
             'Offer[title]' => 'Functional Test Offer Past Expiry',
             'Offer[type]' => Offer::TYPE_WELCOME,
             'Offer[amount]' => '150.00',
@@ -87,14 +87,14 @@ class AdminOfferEndpointTest extends TestCase
         $this->assertStringContainsString('Expiration date must be in the future.', $response['body']);
     }
 
-    public function testOfferCreateSuccess()
+    public function testOfferCreateSuccess(): void
     {
         $this->adminClient->get('/admin/offers/create');
 
         $futureDate = date('Y-m-d\TH:i', strtotime('+15 days'));
 
         $response = $this->adminClient->post('/admin/offers/create', [
-            'Offer[casino_id]' => $this->casino->id,
+            'Offer[casino_id]' => $this->casino?->id,
             'Offer[title]' => 'Functional Test Offer Special Promo',
             'Offer[type]' => Offer::TYPE_NO_DEPOSIT,
             'Offer[amount]' => '25.00',
@@ -110,7 +110,7 @@ class AdminOfferEndpointTest extends TestCase
         $this->assertEquals('functional-test-offer-special-promo', $offer->slug);
     }
 
-    public function testOfferView()
+    public function testOfferView(): void
     {
         $offer = Offer::find()->one();
         $this->assertNotNull($offer);
@@ -124,10 +124,10 @@ class AdminOfferEndpointTest extends TestCase
         $this->assertEquals(404, $notFound['statusCode']);
     }
 
-    public function testOfferUpdate()
+    public function testOfferUpdate(): void
     {
         $offer = new Offer([
-            'casino_id' => $this->casino->id,
+            'casino_id' => $this->casino?->id,
             'title' => 'Functional Test Offer To Update',
             'type' => Offer::TYPE_FREE_SPINS,
             'amount' => 50,
@@ -143,7 +143,7 @@ class AdminOfferEndpointTest extends TestCase
 
         // 2. POST update
         $updateRes = $this->adminClient->post('/admin/offers/' . $offer->id . '/update', [
-            'Offer[casino_id]' => $this->casino->id,
+            'Offer[casino_id]' => $this->casino?->id,
             'Offer[title]' => 'Functional Test Offer Updated Title',
             'Offer[type]' => Offer::TYPE_WELCOME,
             'Offer[amount]' => '250.00',
@@ -157,10 +157,10 @@ class AdminOfferEndpointTest extends TestCase
         $this->assertEquals(250.00, (float)$offer->amount);
     }
 
-    public function testOfferDeleteVerbFilterAndExecution()
+    public function testOfferDeleteVerbFilterAndExecution(): void
     {
         $offer = new Offer([
-            'casino_id' => $this->casino->id,
+            'casino_id' => $this->casino?->id,
             'title' => 'Functional Test Offer To Delete',
             'type' => Offer::TYPE_FREE_SPINS,
             'amount' => 10,

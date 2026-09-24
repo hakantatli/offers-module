@@ -16,7 +16,7 @@ class CasinoTest extends TestCase
         parent::tearDown();
     }
 
-    public function testValidationRulesRequired()
+    public function testValidationRulesRequired(): void
     {
         $casino = new Casino();
         $this->assertFalse($casino->validate());
@@ -24,7 +24,7 @@ class CasinoTest extends TestCase
         $this->assertArrayHasKey('rating', $casino->errors);
     }
 
-    public function testRatingValidationBounds()
+    public function testRatingValidationBounds(): void
     {
         // Negative rating should fail
         $casino = new Casino(['name' => 'Test Casino', 'rating' => -0.5]);
@@ -47,7 +47,7 @@ class CasinoTest extends TestCase
         }
     }
 
-    public function testSluggableBehaviorAutoGeneratesSlug()
+    public function testSluggableBehaviorAutoGeneratesSlug(): void
     {
         $casino = new Casino();
         $casino->name = 'Test Casino Royal 2026';
@@ -58,7 +58,7 @@ class CasinoTest extends TestCase
         $this->assertEquals('test-casino-royal-2026', $casino->slug);
     }
 
-    public function testSluggableBehaviorEnsuresUniqueSlugOnConflict()
+    public function testSluggableBehaviorEnsuresUniqueSlugOnConflict(): void
     {
         $casino1 = new Casino(['name' => 'Test Casino Duplicate', 'rating' => 4.0, 'is_active' => 1]);
         $this->assertTrue($casino1->save());
@@ -69,7 +69,7 @@ class CasinoTest extends TestCase
         $this->assertEquals('test-casino-duplicate-2', $casino2->slug);
     }
 
-    public function testManualSlugIsPreserved()
+    public function testManualSlugIsPreserved(): void
     {
         $casino = new Casino([
             'name' => 'Test Casino Custom',
@@ -81,7 +81,7 @@ class CasinoTest extends TestCase
         $this->assertEquals('my-custom-vip-slug', $casino->slug);
     }
 
-    public function testOffersRelation()
+    public function testOffersRelation(): void
     {
         $casino = Casino::find()->one();
         $this->assertNotNull($casino, 'At least one casino should exist in the database');

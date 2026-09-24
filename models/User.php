@@ -10,13 +10,16 @@ use yii\web\IdentityInterface;
  */
 class User extends BaseObject implements IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
+    public ?string $id = null;
+    public ?string $username = null;
+    public ?string $password = null;
+    public ?string $authKey = null;
+    public ?string $accessToken = null;
 
-    private static $users = [
+    /**
+     * @var array<int|string, array{id: string, username: string, password: string, authKey: string, accessToken: string}>
+     */
+    private static array $users = [
         '100' => [
             'id' => '100',
             'username' => 'admin',

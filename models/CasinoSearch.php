@@ -32,10 +32,10 @@ class CasinoSearch extends Casino
     /**
      * Creates data provider instance with search query applied.
      *
-     * @param array $params
+     * @param array<string, mixed> $params
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params = []): ActiveDataProvider
     {
         $query = Casino::find();
 

@@ -38,7 +38,7 @@ class OfferTest extends TestCase
         Casino::deleteAll(['slug' => 'test-unit-casino']);
     }
 
-    public function testValidationRulesRequired()
+    public function testValidationRulesRequired(): void
     {
         $offer = new Offer();
         $this->assertFalse($offer->validate());
@@ -50,7 +50,7 @@ class OfferTest extends TestCase
         $this->assertArrayHasKey('status', $offer->errors);
     }
 
-    public function testCasinoForeignKeyValidation()
+    public function testCasinoForeignKeyValidation(): void
     {
         $offer = new Offer([
             'casino_id' => 999999, // Non-existent casino
@@ -64,7 +64,7 @@ class OfferTest extends TestCase
         $this->assertArrayHasKey('casino_id', $offer->errors);
     }
 
-    public function testTypeEnumValidation()
+    public function testTypeEnumValidation(): void
     {
         $offer = new Offer(['type' => 'invalid_bonus_type']);
         $this->assertFalse($offer->validate(['type']));
@@ -75,7 +75,7 @@ class OfferTest extends TestCase
         }
     }
 
-    public function testStatusEnumValidation()
+    public function testStatusEnumValidation(): void
     {
         $offer = new Offer(['status' => 'archived_invalid']);
         $this->assertFalse($offer->validate(['status']));
@@ -86,7 +86,7 @@ class OfferTest extends TestCase
         }
     }
 
-    public function testAmountValidation()
+    public function testAmountValidation(): void
     {
         $offer = new Offer(['amount' => -50]);
         $this->assertFalse($offer->validate(['amount']));
@@ -98,12 +98,12 @@ class OfferTest extends TestCase
         $this->assertTrue($offer->validate(['amount']));
     }
 
-    public function testExpiresAtValidationFutureRequirement()
+    public function testExpiresAtValidationFutureRequirement(): void
     {
         // Past date must fail
         $pastDate = date('Y-m-d H:i:s', strtotime('-1 day'));
         $offer = new Offer([
-            'casino_id' => $this->testCasino->id,
+            'casino_id' => $this->testCasino?->id,
             'title' => 'Test Unit Offer Past Date',
             'type' => Offer::TYPE_WELCOME,
             'amount' => 100,
@@ -128,10 +128,10 @@ class OfferTest extends TestCase
         $this->assertFalse($offer->validate(['expires_at']));
     }
 
-    public function testSluggableBehaviorAutoGeneratesSlug()
+    public function testSluggableBehaviorAutoGeneratesSlug(): void
     {
         $offer = new Offer([
-            'casino_id' => $this->testCasino->id,
+            'casino_id' => $this->testCasino?->id,
             'title' => 'Test Unit Offer Super Bonus 500',
             'type' => Offer::TYPE_WELCOME,
             'amount' => 500,
@@ -142,10 +142,10 @@ class OfferTest extends TestCase
         $this->assertEquals('test-unit-offer-super-bonus-500', $offer->slug);
     }
 
-    public function testManualSlugIsSanitized()
+    public function testManualSlugIsSanitized(): void
     {
         $offer = new Offer([
-            'casino_id' => $this->testCasino->id,
+            'casino_id' => $this->testCasino?->id,
             'title' => 'Test Unit Offer Manual Slug',
             'slug' => 'My Custom Slug With Spaces & Special @Chars!',
             'type' => Offer::TYPE_NO_DEPOSIT,
@@ -157,7 +157,7 @@ class OfferTest extends TestCase
         $this->assertEquals('my-custom-slug-with-spaces-special-chars', $offer->slug);
     }
 
-    public function testBadgeHelperMethods()
+    public function testBadgeHelperMethods(): void
     {
         $offer = new Offer(['type' => Offer::TYPE_WELCOME, 'status' => Offer::STATUS_ACTIVE]);
         $this->assertEquals('bg-primary', $offer->getTypeBadgeClass());

@@ -106,9 +106,9 @@ class Offer extends ActiveRecord
      * Validates that expiration date is in the future.
      *
      * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
+     * @param array<string, mixed>|null $params the additional name-value pairs given in the rule
      */
-    public function validateExpiresAt($attribute, $params)
+    public function validateExpiresAt(string $attribute, ?array $params = null): void
     {
         if (!empty($this->$attribute)) {
             $timestamp = strtotime($this->$attribute);
@@ -157,9 +157,9 @@ class Offer extends ActiveRecord
     /**
      * Returns key-value array of supported offer types.
      *
-     * @return array
+     * @return array<string, string>
      */
-    public static function getTypes()
+    public static function getTypes(): array
     {
         return [
             self::TYPE_WELCOME => 'Welcome Bonus',
@@ -171,9 +171,9 @@ class Offer extends ActiveRecord
     /**
      * Returns key-value array of supported offer statuses.
      *
-     * @return array
+     * @return array<string, string>
      */
-    public static function getStatuses()
+    public static function getStatuses(): array
     {
         return [
             self::STATUS_ACTIVE => 'Active',

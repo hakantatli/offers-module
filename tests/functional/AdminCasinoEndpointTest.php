@@ -30,14 +30,14 @@ class AdminCasinoEndpointTest extends TestCase
         parent::tearDown();
     }
 
-    public function testCasinoIndexGuestRedirects()
+    public function testCasinoIndexGuestRedirects(): void
     {
         $response = $this->guestClient->get('/admin/casinos');
         $this->assertEquals(302, $response['statusCode']);
         $this->assertStringContainsString('login', $response['headers']['location'] ?? '');
     }
 
-    public function testCasinoIndexAdminAccess()
+    public function testCasinoIndexAdminAccess(): void
     {
         $response = $this->adminClient->get('/admin/casinos');
         $this->assertEquals(200, $response['statusCode']);
@@ -45,7 +45,7 @@ class AdminCasinoEndpointTest extends TestCase
         $this->assertStringContainsString('+ New Casino', $response['body']);
     }
 
-    public function testCasinoCreateForm()
+    public function testCasinoCreateForm(): void
     {
         // Guest is blocked
         $guestRes = $this->guestClient->get('/admin/casinos/create');
@@ -58,7 +58,7 @@ class AdminCasinoEndpointTest extends TestCase
         $this->assertStringContainsString('name="Casino[name]"', $adminRes['body']);
     }
 
-    public function testCasinoCreateValidationFailure()
+    public function testCasinoCreateValidationFailure(): void
     {
         // Extract CSRF token
         $this->adminClient->get('/admin/casinos/create');
@@ -74,7 +74,7 @@ class AdminCasinoEndpointTest extends TestCase
         $this->assertStringContainsString('Rating (0.0 - 5.0) must be no greater than 5.', $response['body']);
     }
 
-    public function testCasinoCreateSuccess()
+    public function testCasinoCreateSuccess(): void
     {
         $this->adminClient->get('/admin/casinos/create');
 
@@ -91,7 +91,7 @@ class AdminCasinoEndpointTest extends TestCase
         $this->assertEquals('functional-test-casino-golden', $casino->slug);
     }
 
-    public function testCasinoView()
+    public function testCasinoView(): void
     {
         $casino = Casino::find()->one();
         $this->assertNotNull($casino);
@@ -105,7 +105,7 @@ class AdminCasinoEndpointTest extends TestCase
         $this->assertEquals(404, $notFoundRes['statusCode']);
     }
 
-    public function testCasinoUpdate()
+    public function testCasinoUpdate(): void
     {
         $casino = new Casino([
             'name' => 'Functional Test Casino To Update',
@@ -132,7 +132,7 @@ class AdminCasinoEndpointTest extends TestCase
         $this->assertEquals(4.95, (float)$casino->rating);
     }
 
-    public function testCasinoDeleteVerbFilterAndExecution()
+    public function testCasinoDeleteVerbFilterAndExecution(): void
     {
         $casino = new Casino([
             'name' => 'Functional Test Casino To Delete',

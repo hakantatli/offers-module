@@ -90,14 +90,6 @@ $this->params['breadcrumbs'][] = $model->title;
 
                     <ul class="list-group list-group-flush mb-3">
                         <li class="list-group-item px-0 d-flex justify-content-between">
-                            <span class="text-muted">Status:</span>
-                            <span class="badge bg-success">Verified Active</span>
-                        </li>
-                        <li class="list-group-item px-0 d-flex justify-content-between">
-                            <span class="text-muted">Licensing & Safety:</span>
-                            <span class="text-dark fw-semibold">Regulated</span>
-                        </li>
-                        <li class="list-group-item px-0 d-flex justify-content-between">
                             <span class="text-muted">Promotions:</span>
                             <?= Html::a('View all ' . Html::encode($model->casino->name) . ' offers', ['offer/index', 'casino_id' => $model->casino->id], ['class' => 'text-decoration-none']) ?>
                         </li>
@@ -105,15 +97,6 @@ $this->params['breadcrumbs'][] = $model->title;
                 </div>
             </div>
 
-            <!-- Security Badge Box -->
-            <div class="card shadow-sm border-0 bg-light">
-                <div class="card-body p-3">
-                    <h6 class="fw-bold text-dark mb-2">🛡️ 100% Verified Offer</h6>
-                    <p class="small text-muted mb-0">
-                        This offer has been checked by our editorial team. Always gamble responsibly. 18+ only.
-                    </p>
-                </div>
-            </div>
         </div>
     </div>
 </div>

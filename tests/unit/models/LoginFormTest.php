@@ -8,7 +8,7 @@ use Yii;
 
 class LoginFormTest extends TestCase
 {
-    public function testBlankCredentials()
+    public function testBlankCredentials(): void
     {
         $model = new LoginForm();
         $this->assertFalse($model->validate());
@@ -16,7 +16,7 @@ class LoginFormTest extends TestCase
         $this->assertArrayHasKey('password', $model->errors);
     }
 
-    public function testWrongPassword()
+    public function testWrongPassword(): void
     {
         $model = new LoginForm([
             'username' => 'admin',
@@ -27,7 +27,7 @@ class LoginFormTest extends TestCase
         $this->assertArrayHasKey('password', $model->errors);
     }
 
-    public function testCorrectLogin()
+    public function testCorrectLogin(): void
     {
         $model = new LoginForm([
             'username' => 'admin',

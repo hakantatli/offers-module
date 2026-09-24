@@ -17,14 +17,14 @@ class PublicEndpointTest extends TestCase
         $this->client = new TestHttpClient();
     }
 
-    public function testRootRedirectsToOffers()
+    public function testRootRedirectsToOffers(): void
     {
         $response = $this->client->get('/');
         $this->assertEquals(302, $response['statusCode']);
         $this->assertStringContainsString('offers', $response['headers']['location'] ?? '');
     }
 
-    public function testOffersIndexDisplaysCardsAndFilters()
+    public function testOffersIndexDisplaysCardsAndFilters(): void
     {
         $response = $this->client->get('/offers');
         $this->assertEquals(200, $response['statusCode']);
@@ -34,14 +34,14 @@ class PublicEndpointTest extends TestCase
         $this->assertStringContainsString('Showing <strong>20</strong>', $response['body']);
     }
 
-    public function testOffersPaginationPageTwo()
+    public function testOffersPaginationPageTwo(): void
     {
         $response = $this->client->get('/offers?page=2');
         $this->assertEquals(200, $response['statusCode']);
         $this->assertStringContainsString('Page <strong>2</strong>', $response['body']);
     }
 
-    public function testOffersFilterByType()
+    public function testOffersFilterByType(): void
     {
         $response = $this->client->get('/offers?type=no_deposit');
         $this->assertEquals(200, $response['statusCode']);
@@ -49,7 +49,7 @@ class PublicEndpointTest extends TestCase
         $this->assertStringContainsString('No Deposit', $response['body']);
     }
 
-    public function testOffersFilterByCasino()
+    public function testOffersFilterByCasino(): void
     {
         $casino = Casino::find()->where(['is_active' => 1])->one();
         $this->assertNotNull($casino);
@@ -59,7 +59,7 @@ class PublicEndpointTest extends TestCase
         $this->assertStringContainsString('(filtered)', $response['body']);
     }
 
-    public function testOfferDetailActiveOfferReturns200()
+    public function testOfferDetailActiveOfferReturns200(): void
     {
         $activeOffer = Offer::find()
             ->joinWith(['casino'])
@@ -76,13 +76,13 @@ class PublicEndpointTest extends TestCase
         $this->assertStringContainsString('Terms & Wagering Requirements', $response['body']);
     }
 
-    public function testOfferDetailNonExistentSlugReturns404()
+    public function testOfferDetailNonExistentSlugReturns404(): void
     {
         $response = $this->client->get('/offer/this-offer-slug-does-not-exist-at-all');
         $this->assertEquals(404, $response['statusCode']);
     }
 
-    public function testOfferDetailDraftStatusReturns404()
+    public function testOfferDetailDraftStatusReturns404(): void
     {
         $draftOffer = Offer::findOne(['status' => Offer::STATUS_DRAFT]);
         if ($draftOffer) {
@@ -91,7 +91,7 @@ class PublicEndpointTest extends TestCase
         }
     }
 
-    public function testOfferDetailExpiredStatusReturns404()
+    public function testOfferDetailExpiredStatusReturns404(): void
     {
         $expiredOffer = Offer::findOne(['status' => Offer::STATUS_EXPIRED]);
         if ($expiredOffer) {
@@ -100,7 +100,7 @@ class PublicEndpointTest extends TestCase
         }
     }
 
-    public function testOfferDetailInactiveCasinoReturns404()
+    public function testOfferDetailInactiveCasinoReturns404(): void
     {
         $inactiveCasinoOffer = Offer::find()
             ->joinWith(['casino'])

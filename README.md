@@ -37,16 +37,13 @@ docker compose exec app composer test
 
 # Run with human-readable specification output
 docker compose exec app vendor/bin/phpunit --testdox
-
-
 ```
 
-### 2. Static Analysis: PHPStan (Level 5)
-Static analysis configured at Level 5 with zero errors across controllers, models, config, and tests:
+### 2. Static Analysis: PHPStan (Level 6)
+Static analysis configured at Level 6
 
 ```bash
 docker compose exec app composer stan
-# or: docker compose exec app vendor/bin/phpstan analyse
 ```
 
 ---

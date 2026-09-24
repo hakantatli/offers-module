@@ -19,9 +19,7 @@ $this->title = 'Exclusive Casino Offers & Bonuses';
     <!-- Hero Banner -->
     <div class="p-4 p-md-5 mb-4 rounded-3 text-white shadow-sm" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
         <div class="col-md-9 px-0">
-            <span class="badge bg-warning text-dark mb-2 px-3 py-2 fw-bold text-uppercase">Verified Promotions</span>
-            <h1 class="display-5 fw-bold">Top Verified Casino Offers</h1>
-            <p class="lead my-3">Compare the highest welcome bonuses, exclusive no deposit chips, and free spins packages from top-rated casino operators.</p>
+            <h1 class="display-5 fw-bold">Casino Offers</h1>
         </div>
     </div>
 
